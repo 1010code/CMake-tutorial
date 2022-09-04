@@ -39,13 +39,9 @@ std::cout <<  "hello world" << std::endl;
 
 ```c
 PROJECT (HELLO)
-
 SET(SRC_LIST main.cpp)
-
 MESSAGE(STATUS "This is BINARY dir " ${HELLO_BINARY_DIR})
-
 MESSAGE(STATUS "This is SOURCE dir "${HELLO_SOURCE_DIR})
-
 ADD_EXECUTABLE(hello ${SRC_LIST})
 ```
 
@@ -91,33 +87,19 @@ make
 - `SET(SRC_LIST main.cpp)` 可以寫成 `SET(SRC_LIST "main.cpp")`，如果文件名稱中含有空格，就必須加上雙引號。
 - `ADD_EXECUTABLE(hello main)` 副檔名可省略，他會自動去找 `.c` 和 `.cpp`，但建議還是寫清楚附上完整名稱。
 
-# 内部构建和外部构建
-- 上述例子就是内部构建，他生产的临时文件特别多，不方便清理
-- 外部构建，就会把生成的临时文件放在build目录下，不会对源文件有任何影响强烈使用外部构建方式
+# 內部構建和外部構建
+上述例子就是內部構建，缺點就是產生的臨時文件特別多，不易管理專案。而外部構建，就會把生成的臨時文件放在 build 目錄下，不會對源文件有任何影響，因此建議使用外部構建方式。
 
-## 外部构建方式举例
+## 外部構建方式舉例
+延續剛剛例子，這次使用外部構建方式來編譯文件。首先在當前專案目錄下建立一個 build 資料夾，目的是讓生成文件存放至該處。接著 `cd build` 進入該資料夾後執行 `cmake ..` 產生 makefile 文件。最後在該目錄資料夾下輸入 `make` 指令編譯文件並產生 Hello 的可執行程序。
 
-```cpp
-//例子目录，CMakeLists.txt和上面例子一致
-[root@localhost cmake]# pwd
-/root/cmake
-[root@localhost cmake]# ll
-total 8
--rw-r--r--. 1 root root 198 Dec 28 20:59 CMakeLists.txt
--rw-r--r--. 1 root root  76 Dec 28 00:18 main.cpp
-```
+1. 建立 build 資料夾
+2. 終端機進入 build 執行 `cmake ..`
+3. 在 build 目錄下執行 `make`
 
-1、建立一个build目录，可以在任何地方，建议在当前目录下
-
-2、进入build，运行cmake ..    当然..表示上一级目录，你可以写CMakeLists.txt所在的绝对路径，生产的文件都在build目录下了
-
-3、在build目录下，运行make来构建工程
-
-注意外部构建的两个变量
-
-1、HELLO_SOURCE_DIR  还是工程路径
-
-2、HELLO_BINARY_DIR   编译路径 也就是 /root/cmake/bulid
+在編譯的過程中可以注意外部構建的兩個變數輸出訊息：
+- HELLO_SOURCE_DIR 是專案源路徑 xxx
+- HELLO_BINARY_DIR 編譯路徑 xxx/bulid
 
 # 让Hello World看起来更像一个工程
 
