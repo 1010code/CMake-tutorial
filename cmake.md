@@ -80,22 +80,18 @@ make
 ./hello
 ```
 
-# 语法的基本原则
+## 語法的基本原則
+- 變數使用 `${}` 方式取值，但是在 IF 控制語句中可直接使用變數名
+- 指令(參數 1 參數 2...)，參數之間使用空格或分號分開。
+    - 以上面的 ADD_EXECUTABLE 指令為例，如果存在另外一個 func.cpp 文件 
+    - 就要寫成：`ADD_EXECUTABLE(hello main.cpp func.cpp)` 或 `ADD_EXECUTABLE(hello main.cpp;func.cpp)`
+- 指令與大小寫無關的，但建議全部指令以大寫表示。
 
-- 变量使用${}方式取值，但是在 IF 控制语句中是直接使用变量名
-- 指令(参数 1 参数 2...) 参数使用括弧括起，参数之间使用空格或分号分开。 以上面的 ADD_EXECUTABLE 指令为例，如果存在另外一个 func.cpp 源文件
-    
-    就要写成：ADD_EXECUTABLE(hello main.cpp func.cpp)或者ADD_EXECUTABLE(hello main.cpp;func.cpp)
-    
-- 指令是大小写无关的，参数和变量是大小写相关的。但，推荐你全部使用大写指令
-
-## 语法注意事项
-
+## 語法注意事項
 - SET(SRC_LIST main.cpp) 可以写成 SET(SRC_LIST “main.cpp”)，如果源文件名中含有空格，就必须要加双引号
 - ADD_EXECUTABLE(hello main) 后缀可以不行，他会自动去找.c和.cpp，最好不要这样写，可能会有这两个文件main.cpp和main
 
 # 内部构建和外部构建
-
 - 上述例子就是内部构建，他生产的临时文件特别多，不方便清理
 - 外部构建，就会把生成的临时文件放在build目录下，不会对源文件有任何影响强烈使用外部构建方式
 
