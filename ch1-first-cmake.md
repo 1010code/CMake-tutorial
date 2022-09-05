@@ -31,9 +31,9 @@ std::cout <<  "hello world" << std::endl;
     - 向終端輸出用戶自定義的訊息，共有三種模式：
         - SEND_ERROR：產生錯誤訊息，生成過程被跳過。
         - STATUS：一般文字訊息输出前缀為 —。
-        - FATAL_ERROR：立即终止所有 cmake 過程.
+        - FATAL_ERROR：立即终止所有 cmake 過程。
 - ADD_EXECUTABL 指令
-    - 生成可執行文件
+    - 生成可執行文件。
 
 `ADD_EXECUTABLE(hello ${SRC_LIST})` 是生成的可執行文件名是 hello，源文件是讀取SRC_LIST 變數中的內容
 
@@ -62,7 +62,7 @@ ADD_EXECUTABLE(hello main.cpp)
 cmake .
 ```
 
-### 4.  make 編譯
+### 4. make 編譯
 使用 make 指令編譯剛剛所產生的 makefile 文件。
 
 ```sh

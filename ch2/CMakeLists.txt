@@ -1,4 +1,2 @@
-cd ../
-ls
-LLO)
+PROJECT(HELLO)
 ADD_SUBDIRECTORY(src bin)
