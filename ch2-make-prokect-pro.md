@@ -47,20 +47,19 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 ```
 
+> 以上內容參考 [ch2-1](./ch2-1/) 程式碼
+
 # 安裝
 
-- 一种是从代码编译后直接 make install 安装
-- 一种是打包时的指定 目录安装。
-    - 简单的可以这样指定目录：make install DESTDIR=/tmp/test
-    - 稍微复杂一点可以这样指定目录：./configure –prefix=/usr
+- 一種是從代碼編譯後直接 make install 安裝
+- 一種是打包時的指定目錄安裝
+    - 簡單的可以這樣指定目錄：make install DESTDIR=/tmp/test
+    - 稍微複雜一點可以這樣指定目錄：./configure –prefix=/usr
 
-## 如何安装HelloWord
-
-使用CMAKE一个新的指令：INSTALL
-
-INSTALL的安装可以包括：二进制、动态库、静态库以及文件、目录、脚本等
-
-使用CMAKE一个新的变量：CMAKE_INSTALL_PREFIX
+## 如何安裝 Hello World
+- 使用CMAKE一個新的指令：INSTALL
+- INSTALL的安裝可以包括：二進制、動態庫、靜態庫以及文件、目錄、腳本等
+- 使用CMAKE一個新的變量：CMAKE_INSTALL_PREFIX
 
 ```c
 .
@@ -76,50 +75,43 @@ INSTALL的安装可以包括：二进制、动态库、静态库以及文件、�
     └── main.cpp
 ```
 
-### 安装文件COPYRIGHT和README
+### 安裝文件 COPYRIGHT 和 README
+- FILES：文件
+- DESTINATION：
+  - 寫絕對路徑
+  - 可以寫相對路徑，相對路徑實際路徑是：${CMAKE_INSTALL_PREFIX}/<DESTINATION 定義的路徑>
 
+```
 INSTALL(FILES COPYRIGHT README DESTINATION share/doc/cmake/)
+```
 
-FILES：文件
+> CMAKE_INSTALL_PREFIX  預設是在 /usr/local/
 
-DESTINATION：
+cmake -D CMAKE_INSTALL_PREFIX=/usr 是在 cmake 的時候指定 CMAKE_INSTALL_PREFIX 變數的路徑。
 
-1、写绝对路径
-
-2、可以写相对路径，相对路径实际路径是：${CMAKE_INSTALL_PREFIX}/<DESTINATION 定义的路径>
-
-CMAKE_INSTALL_PREFIX  默认是在 /usr/local/
-
-cmake -DCMAKE_INSTALL_PREFIX=/usr    在cmake的时候指定CMAKE_INSTALL_PREFIX变量的路径
-
-### 安装脚本runhello.sh
+### 安裝腳本 runhello.sh
 
 PROGRAMS：非目标文件的可执行程序安装(比如脚本之类)
 
+```
 INSTALL(PROGRAMS runhello.sh DESTINATION bin)
+```
 
-说明：实际安装到的是 /usr/local/bin
+> 實際安裝到的路徑是 /usr/local/bin
 
 ### 安装 doc 中的 hello.txt
+- 是通過在 doc 目錄建立 CMakeLists.txt ，通過 install 下的 file
 
-- 一、是通过在 doc 目录建立CMakeLists.txt ，通过install下的file
-- 二、是直接在工程目录通过
-    
-     INSTALL(DIRECTORY doc/ DESTINATION share/doc/cmake)
-    
+```    
+INSTALL(DIRECTORY doc/ DESTINATION share/doc/cmake)
+``` 
 
-DIRECTORY 后面连接的是所在 Source 目录的相对路径
+DIRECTORY 後面連接的是所在 Source 目錄的相對路徑。注意：abc 和 abc/ 有很大的區別，目錄名不以/結尾：這個目錄將被安裝為目標路徑下的，目錄名以/結尾：將這個目錄中的內容安裝到目標路徑。
 
-注意：abc 和 abc/有很大的区别
+### 安裝過程
 
-目录名不以/结尾：这个目录将被安装为目标路径下的
-
-目录名以/结尾：将这个目录中的内容安装到目标路径
-
-### 安装过程
-
+```
 cmake ..
-
 make
-
 make install
+```
