@@ -1,8 +1,4 @@
-
-
-
-
-# 静态库和动态库的构建
+ 静态库和动态库的构建
 
 任务：
 
@@ -18,8 +14,7 @@
 
 ## 构建实例
 
-```cpp
-[root@localhost cmake2]# tree
+```
 .
 ├── build
 ├── CMakeLists.txt
@@ -71,6 +66,8 @@ ADD_LIBRARY(hello SHARED ${LIBHELLO_SRC})
 - hello：就是正常的库名，生成的名字前面会加上lib，最终产生的文件是libhello.so
 - SHARED，动态库    STATIC，静态库
 - ${LIBHELLO_SRC} ：源文件
+
+> 以上內容參考 [ch2-1](./ch2-1/) 程式碼
 
 ### 同时构建静态和动态库
 
