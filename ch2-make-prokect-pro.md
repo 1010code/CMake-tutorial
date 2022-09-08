@@ -91,7 +91,7 @@ cmake -D CMAKE_INSTALL_PREFIX=/usr 是在 cmake 的時候指定 CMAKE_INSTALL_PR
 
 ### 安裝腳本 runhello.sh
 
-PROGRAMS：非目标文件的可执行程序安装(比如脚本之类)
+PROGRAMS：非目标文件的可执行程序安装(比如腳本之類)
 
 ```
 INSTALL(PROGRAMS runhello.sh DESTINATION bin)
