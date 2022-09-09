@@ -47,10 +47,18 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 ```
 
+### 安裝過程
+進入 build 資料夾，並輸入以下指令編譯安裝：
+
+```
+cmake ..
+make
+make install
+```
+
 > 以上內容參考 [ch2-1](./ch2-1/) 程式碼
 
 # 安裝
-
 - 一種是從代碼編譯後直接 make install 安裝
 - 一種是打包時的指定目錄安裝
     - 簡單的可以這樣指定目錄：make install DESTDIR=/tmp/test
@@ -109,9 +117,12 @@ INSTALL(DIRECTORY doc/ DESTINATION share/doc/cmake)
 DIRECTORY 後面連接的是所在 Source 目錄的相對路徑。注意：abc 和 abc/ 有很大的區別，目錄名不以/結尾：這個目錄將被安裝為目標路徑下的，目錄名以/結尾：將這個目錄中的內容安裝到目標路徑。
 
 ### 安裝過程
+進入 build 資料夾，並輸入以下指令編譯安裝：
 
 ```
 cmake ..
 make
 make install
 ```
+
+> 以上內容參考 [ch2-2](./ch2-2/) 程式碼
