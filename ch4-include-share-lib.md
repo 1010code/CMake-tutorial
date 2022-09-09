@@ -1,5 +1,5 @@
 # 4. 使用外部共享庫和頭文件
-在第三節終我們已經將自定義函式庫編譯並安裝到系統目錄下，接著在本章捷中我們將新建一個專案來使用外部共享庫和標頭檔。
+在第三節中我們已經將自定義函式庫編譯並安裝到系統目錄下，接著在本章捷中我們將新建一個專案來使用外部共享庫和標頭檔。
 
 ```
 .
@@ -26,50 +26,74 @@ PROJECT(HELLO)
 ADD_SUBDIRECTORY(lib bin)
 ```
 
-### 解决：make后头文件找不到的问题
+另外在 src 目錄下 `CMakeLists.txt` 建立：
 
-PS：include <hello/hello.h>  这样include是可以，这么做的话，就没啥好讲的了
-
-关键字：INCLUDE_DIRECTORIES    这条指令可以用来向工程添加多个特定的头文件搜索路径，路径之间用空格分割
-
-在CMakeLists.txt中加入头文件搜索路径
-
+```c
+# Linux 方法
 INCLUDE_DIRECTORIES(/usr/include/hello)
+ADD_EXECUTABLE(hello main.cpp)
 
-感谢：
-
-网友：zcc720的提醒
-
-### 解决：找到引用的函数问题
-
-报错信息：undefined reference to `HelloFunc()'
-
-关键字：LINK_DIRECTORIES     添加非标准的共享库搜索路径
-
-指定第三方库所在路径，LINK_DIRECTORIES(/home/myproject/libs)
-
-关键字：TARGET_LINK_LIBRARIES    添加需要链接的共享库
-
-TARGET_LINK_LIBRARIES的时候，只需要给出动态链接库的名字就行了。
-
-在CMakeLists.txt中插入链接共享库，主要要插在executable的后面
-
-查看main的链接情况
-
-```cpp
-[root@MiWiFi-R4CM-srv bin]# ldd main 
-	linux-vdso.so.1 =>  (0x00007ffedfda4000)
-	libhello.so => /lib64/libhello.so (0x00007f41c0d8f000)
-	libstdc++.so.6 => /lib64/libstdc++.so.6 (0x00007f41c0874000)
-	libm.so.6 => /lib64/libm.so.6 (0x00007f41c0572000)
-	libgcc_s.so.1 => /lib64/libgcc_s.so.1 (0x00007f41c035c000)
-	libc.so.6 => /lib64/libc.so.6 (0x00007f41bff8e000)
-	/lib64/ld-linux-x86-64.so.2 (0x00007f41c0b7c000)
+TARGET_LINK_LIBRARIES(hello libhello.so)
 ```
 
-链接静态库
+```c
+# macOS 方法一
+INCLUDE_DIRECTORIES(/usr/local/include/hello)
+ADD_EXECUTABLE(hello main.cpp)
 
-`TARGET_LINK_LIBRARIES(hello libhello.a)`
+FIND_LIBRARY(HELLO_LIBRARY hello HINTS /usr/local/lib)
+TARGET_LINK_LIBRARIES(hello PUBLIC ${HELLO_LIBRARY})
+```
+
+```c
+# macOS 方法二
+INCLUDE_DIRECTORIES(/usr/local/include/hello)
+LINK_DIRECTORIES(/usr/local/lib)
+ADD_EXECUTABLE(hello main.cpp)
+TARGET_LINK_LIBRARIES(hello libhello.dylib)
+```
+
+### 解決 make 標頭檔找不到的問題
+INCLUDE_DIRECTORIES 這個指令可以用來向專案添加多個特定的頭文件搜索路徑，路徑之間用空格分割。在 res 資料夾下的 `CMakeLists.txt` 中加標頭檔的路徑。
+
+```c
+INCLUDE_DIRECTORIES(/usr/local/include/hello)
+```
+
+> `include <hello/hello.h>`  這樣 include 也可以。
+
+### 解決：找到引用的函數問題
+
+若出現此錯誤訊息： `undefined reference to HelloFunc()`，則表示在編譯過程中沒有正確被連結到動態庫。可以使用 `LINK_DIRECTORIES` 指令添加非標準的共享庫搜索路徑。
+ 
+```c
+LINK_DIRECTORIES(/usr/local/lib)
+```
+
+另外再透過 `TARGET_LINK_LIBRARIES` 指令添加需要鏈接的共享庫(只需要給出動態鏈接庫的名字就行)。mac: dylib; Linux: so。
+
+```c
+TARGET_LINK_LIBRARIES(hello libhello.dylib)
+```
+
+> 注意：在 CMakeLists.txt 中插入鏈接共享庫，主要要插在 executable 的後面。
+
+Linux 用 `ldd` 查看編譯過後的鏈接狀況：
+
+```sh
+ldd hello
+```
+
+macOS 用戶：
+```sh
+otool -L hello
+```
+
+
+鏈接靜態庫的寫法：
+```c
+TARGET_LINK_LIBRARIES(hello libhello.a)
+```
 
 ### 特殊的环境变量 CMAKE_INCLUDE_PATH 和 CMAKE_LIBRARY_PATH
 
@@ -81,12 +105,6 @@ TARGET_LINK_LIBRARIES的时候，只需要给出动态链接库的名字就行�
 
 补充：生产debug版本的方法：
 cmake .. -DCMAKE_BUILD_TYPE=debug
-
-# 本⼈所有视频和笔记都是免费分享给⼤家的，制作视频和笔记要花费⼤量的时间成本
-我也有⽼婆和孩⼦要养，恳求各位观众⽼爷们有经济实⼒的稍微打赏⼀下⼩弟，但不强求，再⼀次感谢。
-您的打赏，会让我今后有更⼤的动⼒，做出更优质的视频，感谢⼤家的⽀持
-
-![Untitled](CMake%204f0e9a3fcf9949adab4540191610cf3e/Untitled.png)
 
 
 ## Reference
