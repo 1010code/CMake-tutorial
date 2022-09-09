@@ -146,9 +146,11 @@ make
 make install
 ```
 
+> 如果是 Linux 用戶 cmake -D CMAKE_INSTALL_PREFIX=/usr ..
+
 > 安裝的時候，指定一下路徑，放到系統下。
 - Installing: /usr/local/include/hello/hello.h
 - Installing: /usr/local/lib/libhello.dylib
 - Installing: /usr/local/lib/libhello.a
 
-> 以上內容參考 [ch3-1](./ch3-1/) 程式碼
+> 以上內容參考 [ch3-2](./ch3-2/) 程式碼

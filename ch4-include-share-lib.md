@@ -1,11 +1,7 @@
- 
+# 4. 使用外部共享庫和頭文件
+在第三節終我們已經將自定義函式庫編譯並安裝到系統目錄下，接著在本章捷中我們將新建一個專案來使用外部共享庫和標頭檔。
 
-### 使用外部共享库和头文件
-
-准备工作，新建一个目录来使用外部共享库和头文件
-
-```cpp
-[root@MiWiFi-R4CM-srv cmake3]# tree
+```
 .
 ├── build
 ├── CMakeLists.txt
@@ -22,6 +18,12 @@ main.cpp
 int main(){
 	HelloFunc();
 }
+```
+
+在最外層 `CMakeLists.txt` 建立：
+```
+PROJECT(HELLO)
+ADD_SUBDIRECTORY(lib bin)
 ```
 
 ### 解决：make后头文件找不到的问题
@@ -67,7 +69,7 @@ TARGET_LINK_LIBRARIES的时候，只需要给出动态链接库的名字就行�
 
 链接静态库
 
-`TARGET_LINK_LIBRARIES(main libhello.a)`
+`TARGET_LINK_LIBRARIES(hello libhello.a)`
 
 ### 特殊的环境变量 CMAKE_INCLUDE_PATH 和 CMAKE_LIBRARY_PATH
 
