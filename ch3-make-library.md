@@ -1,6 +1,6 @@
-# 靜態庫和動態庫的構建
-- 建立一个静态库和动态库，提供 HelloFunc 函数供其他程序编程使用，HelloFunc 向终端输出 Hello World 字符串。 
-- 安装头文件与共享库。
+# 3.1 靜態庫和動態庫的構建
+- 建立一個靜態庫和動態庫，提供 HelloFunc 函數供其他程序編程使用，HelloFunc 向終端輸出 Hello World 字符串。 
+- 安裝標頭檔與共享庫。
 
 ## 靜態庫和動態庫的區別
 - 靜態庫的副檔名一般為 `.a` 或 `.lib`
@@ -63,80 +63,92 @@ ADD_LIBRARY(hello SHARED ${LIBHELLO_SRC})
 - ${LIBHELLO_SRC}： 源文件(以變數的方式呈現)
 
 
+## 安裝過程
+進入 build 資料夾，並輸入以下指令編譯安裝：
 
+```
+cmake ..
+make
+make install
+```
 
-> 以上內容參考 [ch2-1](./ch2-1/) 程式碼
+> 以上內容參考 [ch3-1](./ch3-1/) 程式碼
 
-### 同时构建静态和动态库
+# 3.2 同時構建靜態和動態庫
+必須要在 `lib` 資料夾下對 cmake 文件進行修改，但該如何改呢？
 
 ```cpp
-// 如果用这种方式，只会构建一个动态库，不会构建出静态库，虽然静态库的后缀是.a
+// 如果用這種方式，只會構建一個動態庫，不會構建出靜態庫，雖然靜態庫的後綴是.a
 ADD_LIBRARY(hello SHARED ${LIBHELLO_SRC})
 ADD_LIBRARY(hello STATIC ${LIBHELLO_SRC})
 
-// 修改静态库的名字，这样是可以的，但是我们往往希望他们的名字是相同的，只是后缀不同而已
+// 修改靜態庫的名字，這樣是可以的，但是我們往往希望他們的名字是相同的，只是後綴不同而已
 ADD_LIBRARY(hello SHARED ${LIBHELLO_SRC})
 ADD_LIBRARY(hello_static STATIC ${LIBHELLO_SRC})
 ```
 
-### SET_TARGET_PROPERTIES
+以上的指令都無法解決同時安裝建靜態和動態庫，解決辦法是使用 `SET_TARGET_PROPERTIES`。
 
-这条指令可以用来设置输出的名称，对于动态库，还可以用来指定动态库版本和 API 版本
-
-同时构建静态和动态库
+### SET_TARGET_PROPERTIES 指令
+這個指令可以用來設置輸出的名稱，對於動態庫，還可以用來指定動態庫版本和 API 版本，同時構建靜態和動態庫。
 
 ```cpp
 SET(LIBHELLO_SRC hello.cpp)
 
 ADD_LIBRARY(hello_static STATIC ${LIBHELLO_SRC})
-
-//对hello_static的重名为hello
+// 對 hello_static 重名為 hello
 SET_TARGET_PROPERTIES(hello_static PROPERTIES  OUTPUT_NAME "hello")
-//cmake 在构建一个新的target 时，会尝试清理掉其他使用这个名字的库，因为，在构建 libhello.so 时， 就会清理掉 libhello.a
+// cmake 在構建一個新的 target 時，會嘗試清理掉其他使用這個名字的庫，因為，在構建 libhello.so 時， 就會清理掉 libhello.a
 SET_TARGET_PROPERTIES(hello_static PROPERTIES CLEAN_DIRECT_OUTPUT 1)
 
 ADD_LIBRARY(hello SHARED ${LIBHELLO_SRC})
-
 SET_TARGET_PROPERTIES(hello PROPERTIES  OUTPUT_NAME "hello")
 SET_TARGET_PROPERTIES(hello PROPERTIES CLEAN_DIRECT_OUTPUT 1)
-
 ```
 
-### 动态库的版本号
+### 動態庫的版本號
+一般動態庫都有一個版本號的關聯。
 
-一般动态库都有一个版本号的关联
-
-```cpp
+```
 libhello.so.1.2
 libhello.so ->libhello.so.1
 libhello.so.1->libhello.so.1.2
 ```
 
-CMakeLists.txt 插入如下
+因此最後在 CMakeLists.txt 插入如下：
 
-`SET_TARGET_PROPERTIES(hello PROPERTIES VERSION 1.2 SOVERSION 1)`
+```
+SET_TARGET_PROPERTIES(hello PROPERTIES VERSION 1.2 SOVERSION 1)
+```
 
-VERSION 指代动态库版本，SOVERSION 指代 API 版本。
+> VERSION 指代動態庫版本，SOVERSION 指代 API 版本。
 
-### 安装共享库和头文件
+### 安裝共享庫和標頭檔
+本例中我們將 hello 的共享庫安裝到 `<prefix>/lib` 目錄，以及將 `hello.h` 安裝到`<prefix>/include/hello` 目錄。
 
-本例中我们将 hello 的共享库安装到<prefix>/lib目录，
-
-将 hello.h 安装到<prefix>/include/hello 目录
-
-```cpp
-//文件放到该目录下
+```c
+// 文件放到該目錄下
 INSTALL(FILES hello.h DESTINATION include/hello)
 
-//二进制，静态库，动态库安装都用TARGETS
-//ARCHIVE 特指静态库，LIBRARY 特指动态库，RUNTIME 特指可执行目标二进制。
+// 二進制，靜態庫，動態庫安裝都用 TARGETS
+// ARCHIVE 指靜態庫，LIBRARY 指動態庫，RUNTIME 指可執行目標二進制
 INSTALL(TARGETS hello hello_static LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 ```
 
 ![](/screenshot/img3-1.png)
 
-注意：
+## 安裝過程
+進入 build 資料夾，並輸入以下指令編譯安裝：
 
-安装的时候，指定一下路径，放到系统下
+```
+cmake -D CMAKE_INSTALL_PREFIX=/usr/local ..
+make
+make install
+```
 
-`cmake -D CMAKE_INSTALL_PREFIX=/usr ..`
+> 安裝的時候，指定一下路徑，放到系統下。
+- Installing: /usr/local/include/hello/hello.h
+- Installing: /usr/local/lib/libhello.dylib
+- Installing: /usr/local/lib/libhello.a
+
+> 以上內容參考 [ch3-1](./ch3-1/) 程式碼
