@@ -4,7 +4,7 @@ cmake 是一個高級編譯配置工具，簡單來說 cmake 就是生成 Makefi
 ## CMake安装
 可以到官方網站 [http://www.cmake.org/HTML/Download.htm](http://www.cmake.org/HTML/Download.html) 下載相對應系統版本的安裝檔。
 
-## 第一個 CMake 文件
+## 第一個 CMake 程式
 ### 1. 建立 `main.cpp`
 首先開啟 VScode 新增一個 `main.cpp`。
 
