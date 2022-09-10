@@ -95,15 +95,12 @@ otool -L hello
 TARGET_LINK_LIBRARIES(hello libhello.a)
 ```
 
-### 特殊的环境变量 CMAKE_INCLUDE_PATH 和 CMAKE_LIBRARY_PATH
+### 特殊的環境變數 CMAKE_INCLUDE_PATH 和 CMAKE_LIBRARY_PATH
+這兩個是環境變數而不是 cmake 變數，因此可以在 linux 的 bash 中進行設置。我們上面例子中使用了絕對路徑 `INCLUDE_DIRECTORIES(/usr/include/hello)` 來指明 include 路徑的位置。我們還可以使用另外一種方式，使用環境變量，在終端機輸入以下指令。
 
-注意：这两个是环境变量而不是 cmake 变量，可以在linux的bash中进行设置
+```sh
+export CMAKE_INCLUDE_PATH=/usr/include/hello
+```
 
-我们上面例子中使用了绝对路径INCLUDE_DIRECTORIES(/usr/include/hello)来指明include路径的位置
-
-我们还可以使用另外一种方式，使用环境变量export CMAKE_INCLUDE_PATH=/usr/include/hello
-
-补充：生产debug版本的方法：
-cmake .. -DCMAKE_BUILD_TYPE=debug
 
 
