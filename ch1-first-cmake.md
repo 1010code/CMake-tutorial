@@ -101,3 +101,11 @@ make
 - HELLO_SOURCE_DIR 是專案源路徑 xxx
 - HELLO_BINARY_DIR 編譯路徑 xxx/bulid
 
+又或者可以使用以下指令就不用手動新增 build 資料夾並進入。
+
+```sh
+# 配置項目
+cmake -S . -B build 
+# 建構項目
+cmake --build build
+```

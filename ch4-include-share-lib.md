@@ -110,3 +110,4 @@ cmake .. -DCMAKE_BUILD_TYPE=debug
 ## Reference
 - [從零開始詳細介紹CMake](https://www.bilibili.com/video/BV1vR4y1u77h/?p=4&spm_id_from=pageDriver&vd_source=5a6b197f885be2e93405a9e839601280)
 - [learning-cmake](https://github.com/Akagi201/learning-cmake)
+- [軟件構建: CMake 快速入門](https://www.bilibili.com/video/BV1rR4y1E7n9/?spm_id_from=autoNext&vd_source=5a6b197f885be2e93405a9e839601280)
