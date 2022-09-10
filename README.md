@@ -7,7 +7,7 @@ cmake 是一個高級編譯配置工具，簡單來說 cmake 就是生成 Makefi
 |  [ch1 第一隻 CMake 程式](./ch1-first-cmake.md)    |  [Code](./ch1)      |
 |  [ch2 讓讓專案看起來更像一個工程](./ch2-make-prokect-pro.md)    |  [Code](./ch2)      |
 |  [ch3 靜態庫和動態庫的構建](./ch3-make-library.md)    |  [Code](./ch3)      |
-|  [ch4 使用外部共享庫和頭文件](./ch4-include-share-lib.md)    |  [Code](./ch4)      |
+|  [ch4 使用外部共享庫和標頭檔](./ch4-include-share-lib.md)    |  [Code](./ch4)      |
 
 ## Reference
 - [從零開始詳細介紹CMake](https://www.bilibili.com/video/BV1vR4y1u77h/?p=4&spm_id_from=pageDriver&vd_source=5a6b197f885be2e93405a9e839601280)
