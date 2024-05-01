@@ -13,3 +13,5 @@ cmake 是一個高級編譯配置工具，簡單來說 cmake 就是生成 Makefi
 - [從零開始詳細介紹CMake](https://www.bilibili.com/video/BV1vR4y1u77h/?p=4&spm_id_from=pageDriver&vd_source=5a6b197f885be2e93405a9e839601280)
 - [learning-cmake](https://github.com/Akagi201/learning-cmake)
 - [軟件構建: CMake 快速入門](https://www.bilibili.com/video/BV1rR4y1E7n9/?spm_id_from=autoNext&vd_source=5a6b197f885be2e93405a9e839601280)
+- [建構屬於自己的C/C++專案 : 我的30天CMake學習之旅系列](https://ithelp.ithome.com.tw/users/20162026/ironman/6715)
+- [30 天 CMake 跨平台之旅](https://ithelp.ithome.com.tw/users/20161950/ironman/6278)
